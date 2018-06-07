@@ -1,4 +1,4 @@
-import java.util.List;
+package Model;
 
 public class Grade_for_exam {
     private int score;

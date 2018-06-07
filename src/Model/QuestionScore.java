@@ -1,4 +1,4 @@
-import java.security.PrivateKey;
+package Model;
 
 public class QuestionScore {
     private int points;

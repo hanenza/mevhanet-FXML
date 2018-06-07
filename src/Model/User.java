@@ -1,3 +1,5 @@
+package Model;
+
 abstract  public  class User {
     protected String userName;
     protected String firstName;
