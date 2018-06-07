@@ -6,7 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+
 public class Main extends Application {
+    public static String username;
+    public static String email;
+    public static String password;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -16,6 +24,18 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public static Connection connect() throws ClassNotFoundException {
+        // SQLite connection string
+        String url = "jdbc:sqlite:C:/Users/User/IdeaProjects/mevhanet-FXML/src/Model/Mevhanet.db";
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
 
     public static void main(String[] args) {
         launch(args);

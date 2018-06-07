@@ -42,6 +42,7 @@
             <Insets bottom="20" left="0" right="0" top="20" />
         </GridPane.margin>
     </Button>
+   <Button fx:id="btn_homepage" mnemonicParsing="false" onAction="#handleHomePage" text="HomePage" GridPane.rowIndex="4" />
     <rowConstraints>
         <RowConstraints />
         <RowConstraints />

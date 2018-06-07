@@ -12,8 +12,6 @@ import java.io.IOException;
 public class Controller {
 
     public void pressRegister(ActionEvent event) throws IOException {
-        System.out.println("hello world");
-
         Parent register_page = FXMLLoader.load(getClass().getResource("checkUserName.fxml"));
         Scene register_scene = new Scene (register_page);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
