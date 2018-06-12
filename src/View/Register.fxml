@@ -35,8 +35,6 @@
     </Label>
     <!-- Add Name Text Field -->
     <TextField fx:id="nameField" prefHeight="25.0" prefWidth="329.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-
     <!-- Add Name Label -->
     <Label text="Last Name : " GridPane.columnIndex="0" GridPane.rowIndex="2">
     </Label>

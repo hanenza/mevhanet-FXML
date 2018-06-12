@@ -26,8 +26,6 @@ import java.util.regex.Pattern;
  */
 public class Register {
     String username;
-
-
     @FXML
     private TextField nameField;
 
@@ -51,6 +49,7 @@ public class Register {
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
+
         this.username = Main.username;
         Window owner = submitButton.getScene().getWindow();
         Pattern namePattern = Pattern.compile("([a-zA-Z]*){1,100}$");
@@ -145,11 +144,8 @@ public class Register {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
         Main.email = emailField.getText();
         Main.password = password;
-
         Parent register_page = FXMLLoader.load(getClass().getResource("SendEmail.fxml"));
         Scene register_scene = new Scene (register_page);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
