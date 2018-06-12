@@ -31,21 +31,16 @@ public class CheckUsername {
     private TextField nameField;
 
     @FXML
-    private TextField emailField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
     private Button submitButton;
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
         Window owner = submitButton.getScene().getWindow();
         Pattern usrNamePtrn = Pattern.compile("[a-zA-Z0-9.\\\\-_]{3,}");
-        Matcher uername_mtch = usrNamePtrn.matcher(nameField.getText());
+        String user_name_field = nameField.getText();
+        Matcher uername_mtch = usrNamePtrn.matcher(user_name_field);
 
-        if(nameField.getText().isEmpty()) {
+        if(user_name_field.isEmpty()) {
             Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                     "Please enter username");
             return;
@@ -56,35 +51,16 @@ public class CheckUsername {
             return;
         }
 
-        String sql = MessageFormat.format("SELECT COUNT(*) FROM users WHERE username = ''{0}''", nameField.getText());
-
-        try (Connection conn = Main.connect();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
-
-            rs.next();
-            int rowCount = rs.getInt(1);
-
-            if(rowCount!=0) {
-                Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                        "Username already exist!");
-                return;
-            }
-        } catch (SQLException e) {
-            Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    e.getMessage());
-            return;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if(Main.user.checkIfUsernameExist(user_name_field, owner)){
+            Parent register_page = FXMLLoader.load(getClass().getResource("register.fxml"));
+            Main.user.setUser_name(nameField.getText());
+            Scene register_scene = new Scene (register_page);
+            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            app_stage.hide();
+            app_stage.setTitle("Register");
+            app_stage.setScene(register_scene);
+            app_stage.show();
         }
-        Parent register_page = FXMLLoader.load(getClass().getResource("register.fxml"));
-        Main.username = nameField.getText();
-        Scene register_scene = new Scene (register_page);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.hide();
-        app_stage.setTitle("Register");
-        app_stage.setScene(register_scene);
-        app_stage.show();
     }
 
     @FXML

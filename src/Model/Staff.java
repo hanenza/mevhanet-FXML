@@ -1,4 +1,4 @@
 package Model;
 
-public class Staff {
+public class Staff extends MevhanetUser{
 }
