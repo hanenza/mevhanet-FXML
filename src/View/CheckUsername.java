@@ -77,7 +77,6 @@ public class CheckUsername {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         Parent register_page = FXMLLoader.load(getClass().getResource("register.fxml"));
         Main.username = nameField.getText();
         Scene register_scene = new Scene (register_page);
@@ -86,7 +85,6 @@ public class CheckUsername {
         app_stage.setTitle("Register");
         app_stage.setScene(register_scene);
         app_stage.show();
-
     }
 
     @FXML

@@ -24,7 +24,6 @@ public class sendEmail {
 
     public void handleSubmitButtonAction(ActionEvent event)
     {
-
         final String emailServerPort = "465";
         String receiverEmailID = Main.email;
         String emailSubject = "Welcome to Mevhanet";
@@ -34,13 +33,13 @@ public class sendEmail {
 
         Properties props = new Properties();
         props.put("mail.smtp.user",senderEmailID);
-        props.put("mail.smtp.host", emailSMTPserver);
-        props.put("mail.smtp.port", emailServerPort);
+        props.put("mail.smtp.host",emailSMTPserver);
+        props.put("mail.smtp.port",emailServerPort);
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.socketFactory.port", emailServerPort);
+        props.put("mail.smtp.socketFactory.port",emailServerPort);
         props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.socketFactory.fallback", "false");
+        props.put("mail.smtp.socketFactory.fallback","false");
         SecurityManager security = System.getSecurityManager();
         try
         {

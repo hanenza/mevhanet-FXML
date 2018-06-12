@@ -4,6 +4,8 @@
       <root url="jar://$PROJECT_DIR$/resources/javax.mail.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/.idea/libraries" />
+    </SOURCES>
   </library>
 </component>

@@ -36,6 +36,12 @@
          <Insets bottom="20" left="0" right="0" top="20" />
       </GridPane.margin>
    </Button>
+
+   <Button fx:id="questionBtt" defaultButton="true" onAction="#pressChooseCourse" prefHeight="25.0" prefWidth="288.0" text="Add question" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.rowSpan="1">
+      <GridPane.margin>
+         <Insets bottom="20" left="0" right="0" top="20" />
+      </GridPane.margin>
+   </Button>
    <rowConstraints>
       <RowConstraints />
       <RowConstraints />
