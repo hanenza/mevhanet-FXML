@@ -14,6 +14,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.MessageFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -53,7 +54,19 @@ public class ChooseCourse  {
                     "Please choose course!");
             return;
         }else{
+            String sql1 = MessageFormat.format("SELECT course_id FROM course WHERE course_name = ''{0}''", courseName);
+            try (Connection conn = Main.connect();
+                 Statement stmt  = conn.createStatement();
+                 ResultSet rs    = stmt.executeQuery(sql1)) {
+                 Main.courseID=rs.getInt("course_id");
 
+            }catch (SQLException e) {
+                Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+                        e.getMessage());
+                return;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             Parent question_page = FXMLLoader.load(getClass().getResource("addQuestion.fxml"));
             Main.courseName = courseName;
             Scene question_scene = new Scene (question_page);
@@ -85,6 +98,7 @@ public class ChooseCourse  {
             e.printStackTrace();
         }
     }
+
     public void getCourseName(int id){
         String sql = "SELECT course_name"+" FROM course WHERE course_id=? ";
         try (Connection conn = Main.connect();

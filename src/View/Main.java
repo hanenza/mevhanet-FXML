@@ -19,7 +19,9 @@ public class Main extends Application {
     public static String courseName;
     public static int serialNumber;
     public static String question;
-
+    public static int courseID;
+    public static int serialQuesInRepo;
+    public static int options;
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("myView.fxml"));

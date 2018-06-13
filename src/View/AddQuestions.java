@@ -21,8 +21,6 @@ import java.util.regex.Matcher;
 
 public class AddQuestions {
 
-
-
     public int seq;
 
     @FXML
@@ -53,7 +51,6 @@ public class AddQuestions {
             }
             seq++;
             Main.serialNumber=seq;
-
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {
