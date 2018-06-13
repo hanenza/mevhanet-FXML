@@ -25,11 +25,11 @@ public class sendEmail {
     public void handleSubmitButtonAction(ActionEvent event)
     {
         final String emailServerPort = "465";
-        String receiverEmailID = Main.email;
+        String receiverEmailID = Main.user.getEmail();
         String emailSubject = "Welcome to Mevhanet";
         String emailBody = "Welcome to Mevhanet! \n\t " +
                 "Thank you for creating a Mevhanet account. \n " +
-                "Username: " + Main.username + "\n Password: " + Main.password + "\n";
+                "Username: " + Main.user.getUser_name() + "\n Password: " + Main.user.getPassword() + "\n";
 
         Properties props = new Properties();
         props.put("mail.smtp.user",senderEmailID);
@@ -53,6 +53,13 @@ public class sendEmail {
                     new InternetAddress(receiverEmailID));
             Transport.send(msg);
             System.out.println("Message send Successfully");
+            Parent register_page = FXMLLoader.load(getClass().getResource("myView.fxml"));
+            Scene register_scene = new Scene (register_page);
+            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            app_stage.hide();
+            app_stage.setTitle("Mevhanet");
+            app_stage.setScene(register_scene);
+            app_stage.show();
         }
         catch (Exception mex)
         {
