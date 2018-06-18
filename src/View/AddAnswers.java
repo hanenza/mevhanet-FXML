@@ -1,5 +1,6 @@
 package View;
 
+import Model.Answer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,40 +30,29 @@ public class AddAnswers {
     public void handleSubmitButtonAction(ActionEvent event) throws IOException {
         questionID=Main.serialNumber;
         Window owner = submitButton5.getScene().getWindow();
-        if(textField.getText().isEmpty()) {
-            Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please enter contact For the qestion!!");
-            return;
-        }
         String choice="FALSE";
         if(correctCheck.isSelected()){
             choice="TRUE";
         }
-        String sql = "INSERT INTO answers(seq,question_id,correct,text) " +
-                "VALUES(?,?,?,?)";
-        try (Connection conn = Main.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, getSeq());
-            pstmt.setInt(2, Main.serialNumber);
-            pstmt.setString(3, choice);
-            pstmt.setString(4, textField.getText());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        String sql1 = "UPDATE question SET options = ?";
-        try (Connection conn1 = Main.connect();
-             PreparedStatement pstmt1 = conn1.prepareStatement(sql1)){
-            pstmt1.setInt(1, getOptions());
-            pstmt1.executeUpdate();
-        }catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        confirmationAlert(event);
+        Answer answer=new Answer();
+        answer.setContent(textField.getText());
+        answer.setAns_id(getSeq());
+        answer.setQuestion_id(Main.serialNumber);
+        answer.setCorrect(choice);
+
+      if(Main.ans.addNewAnwer(answer,owner)) {
+          String sql1 = "UPDATE question SET options = ?";
+          try (Connection conn1 = Main.connect();
+               PreparedStatement pstmt1 = conn1.prepareStatement(sql1)) {
+              pstmt1.setInt(1, getOptions());
+              pstmt1.executeUpdate();
+          } catch (SQLException e) {
+              System.out.println(e.getMessage());
+          } catch (ClassNotFoundException e) {
+              e.printStackTrace();
+          }
+          confirmationAlert(event);
+      }
     }
 
     private int getSeq(){

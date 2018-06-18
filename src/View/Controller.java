@@ -1,15 +1,27 @@
 package View;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import ViewModel.ViewModel;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Controller {
+public class Controller implements Observer {
+    @FXML
+    private ViewModel viewModel;
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
+    public void setViewModel(ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
     public void pressRegister(ActionEvent event) throws IOException {
         Parent register_page = FXMLLoader.load(getClass().getResource("checkUserName.fxml"));

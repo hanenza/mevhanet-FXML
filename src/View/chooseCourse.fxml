@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -31,15 +33,40 @@
 
     
         <!-- Add Submit Button -->
-<Button fx:id="submitButton1" defaultButton="true" prefHeight="40" prefWidth="200" text="Add question to repo" onAction="#getRepo" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.rowSpan="1">
+<Button fx:id="submitButton1" defaultButton="true" onAction="#getRepo" prefHeight="40" prefWidth="200" text="Add question to repo" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.rowSpan="1">
 <GridPane.margin>
     <Insets bottom="20" left="0" right="0" top="20" />
 </GridPane.margin>
 </Button>
 <Button fx:id="btn_homepage" mnemonicParsing="false" onAction="#handleHomePage" text="HomePage" GridPane.rowIndex="7" />
-  
+    <!--Label fx:id="toYear" text="Season"GridPane.columnIndex="0" GridPane.rowIndex="1"></Label-->
+   <ComboBox fx:id="seasonCombo" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+    <items>
+        <FXCollections fx:factory="observableArrayList">
+            <String fx:value="a" />
+            <String fx:value="b" />
+            <String fx:value="c" />
+        </FXCollections>
+    </items>
+   </ComboBox>
    <Button fx:id="fillbtn" mnemonicParsing="false" onAction="#getCoursesPerSemester" prefHeight="39.0" prefWidth="205.0" text="Give Course Per semester" GridPane.rowIndex="3" />
    <ListView fx:id="viewCourse" prefHeight="100.0" prefWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   <ComboBox fx:id="yearCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" >
+    <items>
+        <FXCollections fx:factory="observableArrayList">
+            <String fx:value="2010" />
+            <String fx:value="2011" />
+            <String fx:value="2012" />
+            <String fx:value="2013" />
+            <String fx:value="2014" />
+            <String fx:value="2015" />
+            <String fx:value="2016" />
+            <String fx:value="2017" />
+            <String fx:value="2018" />
+        </FXCollections>
+    </items>
+   </ComboBox>
+  
 
 <rowConstraints>
 <RowConstraints />

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CoursePerSemster {
+
     private Notification notifications;
     private List<Student> students;
     private Date semester_date;

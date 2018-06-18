@@ -35,10 +35,11 @@ public class ChooseCourse  {
 
     private String courseName;
     @FXML
-    private ComboBox<String> coursesCombo ;
+    private ComboBox<String> seasonCombo ;
+    @FXML
+    private ComboBox<String> yearCombo ;
     @FXML
     private ListView<String> viewCourse = new ListView<String>();
-
     @FXML
     private Button submitButton1;
 
@@ -46,8 +47,9 @@ public class ChooseCourse  {
 
     public void getRepo(ActionEvent event) throws IOException{
         Window owner = submitButton1.getScene().getWindow();
-
-        courseName= viewCourse.getSelectionModel().getSelectedItem();
+        int year=Integer.parseInt((String)yearCombo.getValue());
+        String season=seasonCombo.getValue();
+        courseName=viewCourse.getSelectionModel().getSelectedItem();
         if (courseName==null||courseName==""){
 
             Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
@@ -79,7 +81,26 @@ public class ChooseCourse  {
     }
     public void getCoursesPerSemester() {
        // coursesCombo=new ComboBox();
-        String sql="SELECT course_id FROM course_per_semester";
+        Window owner = submitButton1.getScene().getWindow();
+        int year=Integer.parseInt((String)yearCombo.getValue());
+        String season=seasonCombo.getValue();
+        String sql = "SELECT course_id FROM course_per_semester WHERE season LIKE"+"'"+season+"'"+"AND year LIKE"+"'"+year+"'"+";";
+       if(yearCombo.getValue().isEmpty()){
+           if(seasonCombo.getValue().isEmpty()){
+               Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+                       "Please choose year and season!");
+               return;
+           }
+           Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+                   "Please choose year!");
+           return;
+
+       }
+        if(seasonCombo.getValue().isEmpty()){
+            Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+                    "Please choose season!");
+            return;
+        }
         try (Connection conn = Main.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql) ) {
@@ -91,7 +112,11 @@ public class ChooseCourse  {
             ObservableList<String> items =FXCollections.observableArrayList (
                     names);
             viewCourse.setItems(items);
-
+            if(names.size()==0){
+                Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+                        "no courses at this season and year please choose another!");
+                return;
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {

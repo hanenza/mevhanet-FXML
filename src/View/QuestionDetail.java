@@ -1,6 +1,8 @@
 package View;
 
+import Model.QuestionInRepo;
 import javafx.collections.FXCollections;
+import Model.CoursePerSemster;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,64 +40,29 @@ public class QuestionDetail {
     private Button submitButton3;
 
     public void handleSubmitButtonActionQuesDetail(ActionEvent event) throws IOException {
+        //getSeq();
+        QuestionInRepo quesRepo=new QuestionInRepo();
         ques=Main.question;
         serial=Main.serialNumber;
+        int myLevel=0;
+        myLevel=Integer.parseInt((String)levelCombo.getValue());
+        quesRepo.setContent(Main.question);
+        quesRepo.setSerial(Main.serialNumber);
+        quesRepo.setCourseID(Main.courseID);
+        quesRepo.setReposeq(getSeq());
+        quesRepo.setLevel(myLevel);
+        quesRepo.setTime( Integer.parseInt(estimatedField.getText()));
+        quesRepo.setOptions(0);
         Pattern timeattern = Pattern.compile("([0-9]+){2}$");
         Matcher timeMatch = timeattern.matcher(estimatedField.getText());
-        int myLevel=0;
+
 
         Window owner = submitButton3.getScene().getWindow();
-
-        if(estimatedField.getText().isEmpty()){
-            Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please fill how many time this question need!");
-            return;
-        }else if(! timeMatch.matches()){
-            Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Invalid time");
-            return;
-        }
-        if(levelCombo.getSelectionModel().isEmpty()){
-            Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please select level to this question");
+        if (Main.questionInRepo.addQuestion(quesRepo,owner)) {
+            Alerts.showAlert(Alert.AlertType.INFORMATION, owner, "Form Success!",
+                    "Details are saved successfuly!!");
         }
 
-        myLevel=Integer.parseInt((String)levelCombo.getValue());
-
-
-
-        String sql = "INSERT INTO question(question_id,contact,level,estimated_time) " +
-                "VALUES(?,?,?,?)";
-        try (Connection conn = Main.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, serial);
-            pstmt.setString(2, ques);
-            pstmt.setInt(3, myLevel);
-            pstmt.setString(4, estimatedField.getText());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        String sql1 = "INSERT INTO questionRepo(seq,question_id,course_id,showed) " +
-                "VALUES(?,?,?,?)";
-
-        try (Connection conn1 = Main.connect();
-             PreparedStatement pstmt1 = conn1.prepareStatement(sql1)) {
-          //  System.out.println(Main.serialNumber);
-            pstmt1.setInt(1, getSeq());
-            pstmt1.setInt(2, Main.serialNumber);
-            pstmt1.setInt(3, Main.courseID);
-            pstmt1.setString(4, "FALSE");
-            pstmt1.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Alerts.showAlert(Alert.AlertType.INFORMATION, owner, "Form Success!",
-                "Details are saved successfuly!!");
        /* String sql1 = MessageFormat.format("SELECT COUNT(*) FROM question WHERE username = ''{0}''", serial);
 
         try (Connection conn = Main.connect();

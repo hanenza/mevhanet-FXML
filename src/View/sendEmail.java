@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.IOException;
+import java.net.Authenticator;
 import java.util.*;
 
 
@@ -43,7 +44,7 @@ public class sendEmail {
         SecurityManager security = System.getSecurityManager();
         try
         {
-            Authenticator auth = new SMTPAuthenticator();
+            SMTPAuthenticator auth = new SMTPAuthenticator();
             Session session = Session.getInstance(props, auth);
             MimeMessage msg = new MimeMessage(session);
             msg.setText(emailBody);
