@@ -9,4 +9,7 @@ public class LoggerError  {
 
     private LoggerError() {
     }
+    public String[] Entries(){
+        return null;
+    }
 }

@@ -10,4 +10,7 @@ public class LoggerAction {
     private LoggerAction() {
 
     }
+    public String[] Entries(){
+        return null;
+    }
 }
