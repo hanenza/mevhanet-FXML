@@ -29,7 +29,7 @@
 
 
 
-
+   <Button fx:id="upqButton" defaultButton="true" onAction="#pressUPQ" prefHeight="25.0" prefWidth="288.0" text="Update question" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.rowSpan="1"/>
    <!-- Add Submit Button -->
    <Button fx:id="submitButton" defaultButton="true" onAction="#pressRegister" prefHeight="25.0" prefWidth="288.0" text="Add user" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.rowSpan="1">
       <GridPane.margin>

@@ -19,7 +19,13 @@ public class Main extends Application  {
     public static Answer ans;
     public static String question;
     public static int courseID;
+    public static int courseID1;
+    public static int questionid;
+    public  static boolean fromupq;
+    public static String answer;
+    public static int answerseq;
     public static int serialQuesInRepo;
+
     public static int options;
     @Override
     public void start(Stage primaryStage) throws Exception{

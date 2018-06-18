@@ -15,7 +15,9 @@ import javafx.stage.Window;
 import java.io.IOException;
 import java.sql.*;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
@@ -24,82 +26,58 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class ChooseCourse  {
+public class ChooseCoursePerSemester  {
     private LinkedList<Integer> courses=new LinkedList<>();
 
     private String courseName;
     @FXML
-    private ComboBox<String> seasonCombo ;
-    @FXML
-    private ComboBox<String> yearCombo ;
+    private ComboBox<String> coursesCombo ;
     @FXML
     private ListView<String> viewCourse = new ListView<String>();
+
     @FXML
     private Button submitButton1;
 
     private List<String> names=new ArrayList<>();
 
-    public void getRepo(ActionEvent event) throws IOException{
+    public void upquestion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
         Window owner = submitButton1.getScene().getWindow();
-        int year=Integer.parseInt((String)yearCombo.getValue());
-        String season=seasonCombo.getValue();
-        courseName=viewCourse.getSelectionModel().getSelectedItem();
+
+        courseName= viewCourse.getSelectionModel().getSelectedItem();
         if (courseName==null||courseName==""){
 
             Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                     "Please choose course!");
             return;
         }else{
-            String sql1 = MessageFormat.format("SELECT course_id FROM course WHERE course_name = ''{0}''", courseName);
-            try (Connection conn = Main.connect();
-                 Statement stmt  = conn.createStatement();
-                 ResultSet rs    = stmt.executeQuery(sql1)) {
-                Main.courseID=rs.getInt("course_id");
 
-            }catch (SQLException e) {
-                Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                        e.getMessage());
-                return;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            Parent question_page = FXMLLoader.load(getClass().getResource("addQuestion.fxml"));
-            Main.courseName = courseName;
-            Scene question_scene = new Scene (question_page);
+            Parent question_page = FXMLLoader.load(getClass().getResource("UpdateQuestion.fxml"));
+            String sql = MessageFormat.format("SELECT course_id FROM course WHERE course_name = ''{0}''", courseName);
+            Connection c= Main.connect();
+            Statement s = c.createStatement();
+
+            // Statement s = null;
+
+            ResultSet rs    = s.executeQuery(sql) ;
+            Main.courseID1=rs.getInt("course_id");
+            s.close();
+            //c.close();
+            // c.close();
+            Scene upquestion_scene = new Scene (question_page);
             Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             app_stage.hide();
-            app_stage.setTitle("add Question to course");
-            app_stage.setScene(question_scene);
+            app_stage.setTitle("update question");
+            app_stage.setScene(upquestion_scene);
             app_stage.show();
         }
     }
     public void getCoursesPerSemester() {
         // coursesCombo=new ComboBox();
-
-        Window owner = submitButton1.getScene().getWindow();
-
-        if(yearCombo.getSelectionModel().isEmpty()){
-            if(seasonCombo.getSelectionModel().isEmpty()){
-                Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                        "Please choose year and season!");
-                return;
-            }
-            Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please choose year!");
-            return;
-
-        }
-        if(seasonCombo.getSelectionModel().isEmpty()){
-
-            Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please choose season!");
-            return;
-        }
-        int year=Integer.parseInt((String)yearCombo.getValue());
-        String season=seasonCombo.getValue();
-        String sql = "SELECT course_id FROM course_per_semester WHERE season LIKE"+"'"+season+"'"+"AND year LIKE"+"'"+year+"'"+";";
+        String sql="SELECT course_id FROM course";
         try (Connection conn = Main.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql) ) {
@@ -111,18 +89,13 @@ public class ChooseCourse  {
             ObservableList<String> items =FXCollections.observableArrayList (
                     names);
             viewCourse.setItems(items);
-            if(names.size()==0){
-                Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                        "no courses at this season and year please choose another!");
-                return;
-            }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-
     public void getCourseName(int id){
         String sql = "SELECT course_name"+" FROM course WHERE course_id=? ";
         try (Connection conn = Main.connect();

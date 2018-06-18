@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AddQuestions {
 
@@ -31,11 +32,13 @@ public class AddQuestions {
     @FXML
     public void handleSubmitButtonActionQues(ActionEvent event) throws IOException {
         Window owner = submitButton2.getScene().getWindow();
+    
         if(quesField.getText().isEmpty()) {
             Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                     "Please enter question!!");
             return;
         }
+
       Main.question = quesField.getText();
 
           String sql=  "SELECT question_id FROM question";

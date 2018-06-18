@@ -39,7 +39,7 @@ public class AddAnswers {
         answer.setAns_id(getSeq());
         answer.setQuestion_id(Main.serialNumber);
         answer.setCorrect(choice);
-
+        answer.setOption(getOptions());
       if(Main.ans.addNewAnwer(answer,owner)) {
           String sql1 = "UPDATE question SET options = ?";
           try (Connection conn1 = Main.connect();

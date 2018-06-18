@@ -30,4 +30,10 @@ public class ViewModel extends Observable implements Observer {
     public boolean addAnswer(Answer ans,Window owner){
         return model.addNewAnswer(ans,owner);
     }
+    boolean editAns(Answer ans,Window owner){
+        return model.editAnswer(ans,owner);
+    }
+    boolean editQues(QuestionInRepo ques,Window owner){
+        return model.editQuestion(ques,owner);
+    }
 }

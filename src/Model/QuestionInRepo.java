@@ -115,5 +115,24 @@ public class QuestionInRepo {
 
         return  true;
     }
+    public boolean updateQues(QuestionInRepo questionInRepo, Window owner){
+        String sql1 = "UPDATE question SET question_id = ?, contact = ?, level = ?, estimated_time = ? WHERE question_id = ?";
+        try (Connection conn = Main.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql1)) {
+            pstmt.setInt(1, questionInRepo.getSerial());
+            // System.out.println(ques);
+            pstmt.setString(2, questionInRepo.getContent());
+            pstmt.setInt(3, questionInRepo.getLevel());
+            pstmt.setInt(4, questionInRepo.getTime());
+            pstmt.setInt(5,questionInRepo.getSerial());
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
 }

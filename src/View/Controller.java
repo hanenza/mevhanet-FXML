@@ -43,4 +43,14 @@ public class Controller implements Observer {
         app_stage.show();
 
     }
+    public void pressUPQ(ActionEvent event) throws IOException {
+        Parent updateq_page = FXMLLoader.load(getClass().getResource("chooseCoursePerSemester.fxml"));
+        Scene updateq_scene = new Scene (updateq_page);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.hide();
+        app_stage.setTitle("Mevhanet - chooseCoursePerSemester");
+        app_stage.setScene( updateq_scene);
+        app_stage.show();
+
+    }
 }

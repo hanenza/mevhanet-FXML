@@ -15,7 +15,7 @@ public class Answer {
     private int ans_id;
     private int question_id;
     private String content;
-
+    private int option;
     public String  isCorrect() {
         return correct;
     }
@@ -48,7 +48,17 @@ public class Answer {
         this.content = content;
     }
 
-    public boolean addNewAnwer(Answer answer,Window owner){
+
+
+    public int getOption() {
+        return option;
+    }
+
+    public void setOption(int option) {
+        this.option = option;
+    }
+
+    public boolean addNewAnwer(Answer answer, Window owner){
         if(answer.getContent().isEmpty()) {
             Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                     "Please enter contact For the qestion!!");
@@ -69,6 +79,37 @@ public class Answer {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        String sql1 = "UPDATE question SET options = ?";
+        try (Connection conn1 = Main.connect();
+             PreparedStatement pstmt1 = conn1.prepareStatement(sql1)){
+            pstmt1.setInt(1,answer.getOption());
+            pstmt1.executeUpdate();
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+    public boolean updateAnswer(Answer ans,Window owner){
+
+        String sql = "UPDATE answers SET seq = ?, question_id = ?, correct = ?, text = ? WHERE seq = ?";
+        try (Connection conn = Main.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, ans.getAns_id());
+            pstmt.setInt(2, ans.getQuestion_id());
+            // System.out.println(ques);
+            pstmt.setString(3, ans.isCorrect());
+            pstmt.setString(4, ans.getContent());
+            pstmt.setInt(5,Main.answerseq);
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return true;
     }
 }

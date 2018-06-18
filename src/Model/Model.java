@@ -21,4 +21,10 @@ public class Model {
     public  boolean addNewAnswer(Answer ans,Window owner){
         return answer.addNewAnwer(ans,owner);
     }
+    public boolean editAnswer(Answer ans, Window owner){
+        return answer.updateAnswer(ans,owner);
+    }
+    public boolean editQuestion(QuestionInRepo questionInRepo, Window owner){
+        return questionInRepo.updateQues(questionInRepo,owner);
+    }
 }
