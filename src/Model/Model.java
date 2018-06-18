@@ -2,10 +2,11 @@ package Model;
 import javafx.collections.ObservableList;
 import javafx.stage.Window;
 
+import javax.management.modelmbean.ModelMBean;
 import java.awt.*;
 import java.util.Observable;
 
-public class Model {
+public class Model implements IModel {
    private MevhanetUser mevhanetUser;
    private QuestionInRepo questionInRepo;
    private Answer answer;

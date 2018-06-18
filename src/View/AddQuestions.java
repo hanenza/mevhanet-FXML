@@ -32,7 +32,7 @@ public class AddQuestions {
     @FXML
     public void handleSubmitButtonActionQues(ActionEvent event) throws IOException {
         Window owner = submitButton2.getScene().getWindow();
-    
+
         if(quesField.getText().isEmpty()) {
             Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                     "Please enter question!!");
