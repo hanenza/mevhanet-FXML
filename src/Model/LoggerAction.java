@@ -8,6 +8,6 @@ public class LoggerAction {
     }
 
     private LoggerAction() {
-    
+
     }
 }

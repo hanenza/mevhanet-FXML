@@ -80,27 +80,29 @@ public class ChooseCourse  {
         }
     }
     public void getCoursesPerSemester() {
+
        // coursesCombo=new ComboBox();
         Window owner = submitButton1.getScene().getWindow();
-        int year=Integer.parseInt((String)yearCombo.getValue());
-        String season=seasonCombo.getValue();
-        String sql = "SELECT course_id FROM course_per_semester WHERE season LIKE"+"'"+season+"'"+"AND year LIKE"+"'"+year+"'"+";";
-       if(yearCombo.getValue().isEmpty()){
-           if(seasonCombo.getValue().isEmpty()){
-               Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                       "Please choose year and season!");
-               return;
-           }
-           Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                   "Please choose year!");
-           return;
+        if(yearCombo.getSelectionModel().isEmpty()){
+            if(seasonCombo.getSelectionModel().isEmpty()){
+                Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+                        "Please choose year and season!");
+                return;
+            }
+            Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+                    "Please choose year!");
+            return;
 
-       }
-        if(seasonCombo.getValue().isEmpty()){
+        }
+        if(seasonCombo.getSelectionModel().isEmpty()){
             Alerts.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                     "Please choose season!");
             return;
         }
+       int year=Integer.parseInt((String)yearCombo.getValue());
+        String season=seasonCombo.getValue();
+        String sql = "SELECT course_id FROM course_per_semester WHERE season LIKE"+"'"+season+"'"+"AND year LIKE"+"'"+year+"'"+";";
+
         try (Connection conn = Main.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql) ) {
